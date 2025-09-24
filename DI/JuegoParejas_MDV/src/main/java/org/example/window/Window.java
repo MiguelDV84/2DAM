@@ -1,7 +1,6 @@
 package org.example.window;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Window extends JFrame {
 
@@ -13,6 +12,5 @@ public class Window extends JFrame {
         setResizable(resizable);
 
         setVisible(true);
-
     }
 }
