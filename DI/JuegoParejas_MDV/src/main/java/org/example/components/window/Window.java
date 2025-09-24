@@ -1,11 +1,10 @@
-package org.example.window;
+package org.example.components.window;
 
 import javax.swing.*;
 
 public class Window extends JFrame {
-
     public Window (String title, int width, int height, boolean resizable) {
-        setTitle(title);
+        super(title);
         setSize(width,height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

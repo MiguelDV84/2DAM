@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.window.welcome.Welcome;
+import org.example.components.window.welcome.Welcome;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

@@ -1,7 +1,8 @@
-package org.example.window.welcome;
+package org.example.components.window.welcome;
 
-import org.example.window.Window;
-import org.example.window.game.Game;
+import org.example.components.window.Window;
+import org.example.components.window.game.Game;
+import org.example.model.Tablero;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,11 +19,13 @@ public class Welcome extends Window {
         panel.add(title,BorderLayout.CENTER);
 
         JButton startBtn = new JButton("Iniciar Juego");
-        startBtn.setFont(new Font("Arial", Font.PLAIN, 16));
+        startBtn.setFont(new Font("Arial", Font.PLAIN, 10));
 
         startBtn.addActionListener(e -> {
             dispose();
-            new Game(12);
+            Tablero tablero = new Tablero(5, 2, 5);
+            tablero.barajar();
+            new Game(tablero);
         });
 
         panel.add(startBtn, BorderLayout.SOUTH);
