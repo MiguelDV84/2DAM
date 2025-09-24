@@ -15,7 +15,6 @@ public class Welcome extends Window {
         JLabel title = new JLabel("Bienvenido");
         title.setFont(new Font("Arial", Font.BOLD,18));
         panel.add(title,BorderLayout.CENTER);
-
         setVisible(true);
     }
 
