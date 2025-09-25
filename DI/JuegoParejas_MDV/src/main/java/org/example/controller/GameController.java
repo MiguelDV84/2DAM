@@ -39,7 +39,7 @@ public class GameController {
 
                 if(!c1.equals(c2)) {
                     ocultar(primeraSeleccion);
-                    ocultar(primeraSeleccion);
+                    ocultar(segundaSelecion);
                     System.out.println("No son iguales");
                     System.out.println("1: " + c1.getId() + " 2: " + c2.getId());
                 }
