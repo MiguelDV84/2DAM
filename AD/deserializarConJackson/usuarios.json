@@ -1,0 +1,116 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Juan Pérez",
+      "email": "juan.perez@example.com",
+      "telefonos": ["600123456", "911223344"],
+      "direccion": {
+        "ciudad": "Madrid",
+        "calle": "Calle Mayor 10",
+        "codigoPostal": "28013"
+      }
+    },
+    {
+      "id": 2,
+      "nombre": "María López",
+      "email": "maria.lopez@example.com",
+      "telefonos": ["622334455"],
+      "direccion": {
+        "ciudad": "Sevilla",
+        "calle": "Avenida de la Constitución 22",
+        "codigoPostal": "41001"
+      }
+    },
+    {
+      "id": 3,
+      "nombre": "Carlos Sánchez",
+      "telefonos": ["644556677"]
+    },
+    {
+      "id": 4,
+      "nombre": "Lucía Fernández",
+      "email": "lucia.fernandez@example.com",
+      "direccion": {
+        "ciudad": "Valencia",
+        "calle": "Gran Vía 45",
+        "codigoPostal": "46010"
+      }
+    },
+    {
+      "id": 5,
+      "nombre": "Pedro Gómez",
+      "email": "pedro.gomez@example.com"
+    },
+    {
+      "id": 6,
+      "nombre": "Ana Torres",
+      "telefonos": ["688998877", "955443322"]
+    },
+    {
+      "id": 7,
+      "nombre": "David Ruiz",
+      "email": "david.ruiz@example.com",
+      "telefonos": ["611223344"],
+      "direccion": {
+        "ciudad": "Bilbao",
+        "calle": "Calle Ercilla 12",
+        "codigoPostal": "48009"
+      }
+    },
+    {
+      "id": 8,
+      "nombre": "Sofía Martínez"
+    },
+    {
+      "id": 9,
+      "nombre": "Miguel Ángel",
+      "email": "miguel.angel@example.com",
+      "direccion": {
+        "ciudad": "Granada",
+        "calle": "Camino de Ronda 34",
+        "codigoPostal": "18004"
+      }
+    },
+    {
+      "id": 10,
+      "nombre": "Elena Castro",
+      "telefonos": ["600112233", "600445566"]
+    },
+    {
+      "id": 11,
+      "nombre": "José Ramírez",
+      "email": "jose.ramirez@example.com"
+    },
+    {
+      "id": 12,
+      "nombre": "Laura Moreno",
+      "telefonos": ["699887766"],
+      "direccion": {
+        "ciudad": "Zaragoza",
+        "calle": "Paseo Independencia 20",
+        "codigoPostal": "50004"
+      }
+    },
+    {
+      "id": 13,
+      "nombre": "Raúl Navarro",
+      "email": "raul.navarro@example.com",
+      "telefonos": ["622556677"]
+    },
+    {
+      "id": 14,
+      "nombre": "Cristina Jiménez"
+    },
+    {
+      "id": 15,
+      "nombre": "Javier Ortega",
+      "email": "javier.ortega@example.com",
+      "direccion": {
+        "ciudad": "Alicante",
+        "calle": "Rambla Méndez Núñez 15",
+        "codigoPostal": "03002"
+      }
+    }
+  ]
+}
