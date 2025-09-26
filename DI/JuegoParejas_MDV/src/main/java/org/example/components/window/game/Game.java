@@ -26,7 +26,7 @@ public class Game extends Window {
         }
 
         add(panel);
-        controller = new GameController(tablero, botones);
+        this.controller = new GameController(tablero, botones);
         JDialog dialogo = new JDialog(this, "Tablero", true); // true = modal
         dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialogo.getContentPane().add(panel);

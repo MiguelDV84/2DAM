@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ProcesoCompetidores:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProcesoCompetidores_jar</output-path>
+    <root id="archive" name="ProcesoCompetidores.jar">
+      <element id="module-output" name="ProcesoCompetidores" />
+    </root>
+  </artifact>
+</component>
