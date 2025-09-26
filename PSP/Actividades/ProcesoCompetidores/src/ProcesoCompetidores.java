@@ -15,7 +15,7 @@ public class ProcesoCompetidores {
     ProcessBuilder pb = new ProcessBuilder();
 
         for (int i = 0; i < 100 ; i++) {
-            pb.command("java","-jar",FILE_JAR,FILE_PATH," Proceso" + i);
+            pb.command("java","-jar",FILE_JAR,FILE_PATH," Proceso externo" + i);
             try {
                 pb.start();
             } catch (IOException ex) {
