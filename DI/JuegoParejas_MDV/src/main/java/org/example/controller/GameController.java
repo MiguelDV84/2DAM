@@ -1,5 +1,5 @@
 package org.example.controller;
-
+import javax.swing.Timer;
 import org.example.model.Carta;
 import org.example.model.Tablero;
 
@@ -25,33 +25,42 @@ public class GameController {
 
     private ActionListener crearListener(int index) {
         return e -> {
-            int valorCarta = tablero.getCartas().get(index).getId();
-            if(primeraSeleccion == null) {
-                primeraSeleccion = valorCarta;
-                mostrar(index, tablero.getCartas().get(index));
-                System.out.println("PRIMERA SELECCION: " + primeraSeleccion);
+            int segundaSeleccion;
+            if(primeraSeleccion == null){
+                primeraSeleccion = index;
+                mostrar(index,tablero.getCartas().get(index).getId());
+
             } else {
-                int segundaSelecion = valorCarta;
-                mostrar(index, tablero.getCartas().get(index));
+                segundaSeleccion = index;
+                mostrar(index,tablero.getCartas().get(index).getId());
 
-                Carta c1 = new Carta(tablero.getCartas().get(primeraSeleccion).getId());
-                Carta c2 = new Carta(tablero.getCartas().get(segundaSelecion).getId());
-
-                if(!c1.equals(c2)) {
-                    ocultar(primeraSeleccion);
-                    ocultar(segundaSelecion);
-                    System.out.println("No son iguales");
-                    System.out.println("1: " + c1.getId() + " 2: " + c2.getId());
+                Carta c1 = tablero.getCartas().get(primeraSeleccion);
+                Carta c2 = tablero.getCartas().get(segundaSeleccion);
+                if(c1.getId() != c2.getId()){
+                    System.out.println("NO SON IGUALES!!!1");
+                    System.out.println("Carta 1: " + c1.getId());
+                    System.out.println("Carta 2: " + c2.getId());
+                    Timer t = new Timer(1000, ev -> {
+                        ocultar(primeraSeleccion); // <-- Asegúrate: ocultar recibe ÍNDICE
+                        ocultar(segundaSeleccion);
+                        primeraSeleccion = null;
+                    });
+                    t.setRepeats(false);
+                    t.start();
+                } else {
+                    System.out.println("SON IGUALES");
+                    System.out.println("Carta 1: " + c1.getId());
+                    System.out.println("Carta 2: " + c2.getId());
+                    primeraSeleccion = null;
                 }
-                System.out.println("SEGUNDA SELECCION: " + segundaSelecion);
-                primeraSeleccion = null;
+
             }
         };
     }
 
-    private void mostrar(int index, Carta carta) {
+    private void mostrar(int index, int valorCarta) {
         JButton boton = botones.get(index);
-        boton.setText(String.valueOf(carta.getId()));
+        boton.setText(String.valueOf(valorCarta));
     }
 
     private void ocultar(int index) {
