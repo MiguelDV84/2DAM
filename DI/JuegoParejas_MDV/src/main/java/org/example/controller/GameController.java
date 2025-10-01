@@ -1,5 +1,6 @@
 package org.example.controller;
 import javax.swing.Timer;
+
 import org.example.model.Carta;
 import org.example.model.Tablero;
 
@@ -11,11 +12,14 @@ public class GameController {
     private final Tablero tablero;
     private final List<JButton> botones;
     private Integer primeraSeleccion = null;
+    private int contadorParejas = 0;
     //private boolean bloqueado = false;
+    private final JLabel contadorParejasLabel;
 
-    public GameController(Tablero tablero, List<JButton> botones) {
+    public GameController(Tablero tablero, List<JButton> botones, JLabel contadorParejasLabel) {
         this.tablero = tablero;
         this.botones = botones;
+        this.contadorParejasLabel = contadorParejasLabel;
 
         for (int i = 0; i < botones.size(); i++) {
             JButton b = botones.get(i);
@@ -48,11 +52,14 @@ public class GameController {
                     t.setRepeats(false);
                     t.start();
                 } else {
+                    contadorParejas++;
+                    contadorParejasLabel.setText("Parejas Encontradas: " + contadorParejas);
                     System.out.println("SON IGUALES");
                     System.out.println("Carta 1: " + c1.getId());
                     System.out.println("Carta 2: " + c2.getId());
                     primeraSeleccion = null;
                 }
+                victoria();
 
             }
         };
@@ -66,6 +73,14 @@ public class GameController {
     private void ocultar(int index) {
         JButton boton = botones.get(index);
         boton.setText("X");
+    }
+
+    private void victoria() {
+        if (contadorParejas == tablero.getCartas().size() / 2) {
+            java.awt.Window owner = SwingUtilities.getWindowAncestor(botones.get(0));
+            JOptionPane.showMessageDialog(owner, "¡Has ganado!", "Victoria",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
 }

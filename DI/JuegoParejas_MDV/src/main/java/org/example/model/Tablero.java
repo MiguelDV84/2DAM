@@ -22,12 +22,16 @@ public class Tablero {
     }
 
     private final int parejas;
+    private final int parejasEncontradas;
+    private final int totalParejas;
     private final int filas;
     private final int columnas;
     private final List<Carta> cartas;
 
-    public Tablero(int parejas, int filas, int columnas) {
+    public Tablero(int parejas, int parejasEncontradas, int totalParejas, int filas, int columnas) {
         this.parejas = parejas;
+        this.parejasEncontradas = parejasEncontradas;
+        this.totalParejas = totalParejas;
         this.filas = filas;
         this.columnas = columnas;
         this.cartas = construirCartas(parejas);
@@ -46,6 +50,8 @@ public class Tablero {
     public void barajar() {
         Collections.shuffle(cartas);
     }
+
+    public boolean victoria(){return parejasEncontradas == totalParejas;}
 
 
 }
