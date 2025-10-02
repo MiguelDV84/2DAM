@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Empleado {
@@ -18,4 +17,14 @@ public class Empleado {
     private int salario;
     private int comision;
     private int idDepartamento;
+
+    public Empleado(String nombre, String apellido, String oficio, String fechaAlta, int salario, int comision, int idDepartamento) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.oficio = oficio;
+        this.fechaAlta = fechaAlta;
+        this.salario = salario;
+        this.comision = comision;
+        this.idDepartamento = idDepartamento;
+    }
 }
