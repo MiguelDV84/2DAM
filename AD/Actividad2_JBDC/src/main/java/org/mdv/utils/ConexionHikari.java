@@ -12,7 +12,7 @@ public class ConexionHikari {
 
     static {
         dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(urlLinux);
+        dataSource.setJdbcUrl(urlWindows);
         dataSource.setMaximumPoolSize(10);
         dataSource.setMinimumIdle(2);
         dataSource.setIdleTimeout(30000);

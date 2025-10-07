@@ -16,6 +16,14 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        JPanel panelBtns = getJPanel();
+
+        add(panelBtns, BorderLayout.SOUTH);
+
+        setVisible(true);
+    }
+
+    private static JPanel getJPanel() {
         JPanel panelBtns = new JPanel();
         panelBtns.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -33,9 +41,6 @@ public class MainWindow extends JFrame {
 
         panelBtns.add(btnEmpleados);
         panelBtns.add(btnDepartamentos);
-
-        add(panelBtns, BorderLayout.SOUTH);
-
-        setVisible(true);
+        return panelBtns;
     }
 }
