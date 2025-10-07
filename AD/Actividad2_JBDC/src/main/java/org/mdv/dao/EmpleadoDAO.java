@@ -38,6 +38,9 @@ public class EmpleadoDAO implements IEmpleadoDAO {
                 "empleados",
                 "id_emp",
                 String.valueOf(id));
+        //printLn para mostrar la consulta en pantalla y comprobar que es correcta
+        System.out.println(sql);
+
         try (Connection cn = ConexionHikari.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -89,6 +92,7 @@ public class EmpleadoDAO implements IEmpleadoDAO {
     }
 
     public static void employedPsMapper(PreparedStatement ps, Empleado empleado) throws SQLException {
+        ps.setInt(0, empleado.getId());
         ps.setString(1, empleado.getNombre());
         ps.setString(2, empleado.getApellido());
         ps.setString(3, empleado.getOficio());
@@ -99,7 +103,8 @@ public class EmpleadoDAO implements IEmpleadoDAO {
     }
 
     public static Empleado employedMapper(ResultSet rs) throws SQLException {
-        return new Empleado(rs.getString("nombre"),
+        return new Empleado(rs.getInt("id_emp"),
+                rs.getString("nombre"),
                 rs.getString("apellido"),
                 rs.getString("oficio"),
                 rs.getString("fecha_alta"),

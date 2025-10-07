@@ -7,10 +7,12 @@ import java.sql.SQLException;
 
 public class ConexionHikari {
     private static HikariDataSource dataSource;
+    private static String urlLinux = "jdbc:sqlite:/home/usumaniana/Escritorio/MiguelDV84/2DAM/AD/Actividad2_JBDC/Actividad2_JBDC.db";
+    private static String urlWindows = "jdbc:sqlite:C:\\Users\\migue\\Documents\\2DAM\\1Trimestre\\2DAM\\AD\\Actividad2_JBDC\\Actividad2_JBDC.db";
 
     static {
         dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:sqlite:/home/usumaniana/Escritorio/MiguelDV84/2DAM/AD/Actividad2_JBDC/Actividad2_JBDC.db");
+        dataSource.setJdbcUrl(urlLinux);
         dataSource.setMaximumPoolSize(10);
         dataSource.setMinimumIdle(2);
         dataSource.setIdleTimeout(30000);

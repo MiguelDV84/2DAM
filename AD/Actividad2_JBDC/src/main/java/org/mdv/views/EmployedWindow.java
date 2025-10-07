@@ -31,7 +31,7 @@ public class EmployedWindow extends JFrame {
         panelCenter.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel emplIdLabel = new JLabel("ID Empleado:");
-        JTextField emplIdField = new JTextField("2");
+        JTextField emplIdField = new JTextField(String.valueOf(empleado.getId()));
 
         JLabel emplLastNameLabel = new JLabel("Apellido:");
         JTextField emplLastNameField = new JTextField(empleado.getApellido());

@@ -18,7 +18,8 @@ public class Empleado {
     private int comision;
     private int idDepartamento;
 
-    public Empleado(String nombre, String apellido, String oficio, String fechaAlta, int salario, int comision, int idDepartamento) {
+    public Empleado(int id,String nombre, String apellido, String oficio, String fechaAlta, int salario, int comision, int idDepartamento) {
+        this.id=id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.oficio = oficio;
