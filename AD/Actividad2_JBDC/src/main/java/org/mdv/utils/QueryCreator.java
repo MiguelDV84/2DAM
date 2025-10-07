@@ -17,8 +17,8 @@ public class QueryCreator {
         StringBuilder sql = new StringBuilder();
         switch (tipoQuery) {
             case SELECT:
-                return String.format("SELECT %s FROM %s", String.join(", ", columns), table);
-                // return sql.append("SELECT * FROM ").append(table).toString();
+               // return String.format("SELECT %s FROM %s", String.join(", ", columns), table);
+                 return sql.append("SELECT * FROM ").append(table).toString();
             case SELECT_BYID:
                 return sql.append("SELECT * FROM ").append(table).append(" WHERE ").append(columns[0]).append("=").append(columns[1]).toString();
             case INSERT:

@@ -1,7 +1,7 @@
 package org.mdv.dao;
 
-import org.mdv.conexion.Conexion;
 import org.mdv.model.Empleado;
+import org.mdv.utils.ConexionHikari;
 import org.mdv.utils.QueryCreator;
 
 import java.sql.Connection;
@@ -19,7 +19,7 @@ public class EmpleadoDAO implements IEmpleadoDAO {
     public List<Empleado> getEmpleados() throws SQLException {
         List<Empleado> empleados = new ArrayList<>();
         String sql = QueryCreator.queryCreator(QueryCreator.TYPE_QUERY.SELECT, "empleados");
-        try (Connection cn = Conexion.getConnection();
+        try (Connection cn = ConexionHikari.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -38,7 +38,7 @@ public class EmpleadoDAO implements IEmpleadoDAO {
                 "empleados",
                 "id_emp",
                 String.valueOf(id));
-        try (Connection cn = Conexion.getConnection();
+        try (Connection cn = ConexionHikari.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -68,7 +68,7 @@ public class EmpleadoDAO implements IEmpleadoDAO {
                 "comision",
                 "id_dep");
 
-        try (Connection cn = Conexion.getConnection();
+        try (Connection cn = ConexionHikari.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             employedPsMapper(ps, empleado);
             return ps.executeUpdate() > 0;

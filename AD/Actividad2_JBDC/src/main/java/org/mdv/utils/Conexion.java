@@ -1,4 +1,4 @@
-package org.mdv.conexion;
+package org.mdv.utils;
 
 import java.sql.*;
 
@@ -8,10 +8,21 @@ public class Conexion {
 
 
     public static Connection getConnection() throws SQLException{
-        Connection cn = DriverManager.getConnection(URLWindows);
+        Connection cn = DriverManager.getConnection(URLlinux);
         try (var st = cn.createStatement()) {
             st.execute("PRAGMA foreign_keys = ON");
         }
     return cn;
+    }
+
+    public static void closeConnection(Connection conn) {
+        if(conn != null) {
+            try {
+                conn.close();
+                System.out.println("Conexión cerrada");
+            } catch(SQLException e) {
+                System.out.println("Error al cerrar la conexión" + e.getMessage());
+            }
+        }
     }
 }

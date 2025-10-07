@@ -14,7 +14,7 @@ public class Empleado {
     private String apellido;
     private String oficio;
     private String fechaAlta;
-    private int salario;
+    private double salario;
     private int comision;
     private int idDepartamento;
 
