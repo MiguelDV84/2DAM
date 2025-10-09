@@ -6,27 +6,27 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConexionHikari {
-    private static HikariDataSource dataSource;
-    private static String urlLinux = "jdbc:sqlite:/home/usumaniana/Escritorio/MiguelDV84/2DAM/AD/Actividad2_JBDC/Actividad2_JBDC.db";
-    private static String urlWindows = "jdbc:sqlite:C:\\Users\\migue\\Documents\\2DAM\\1Trimestre\\2DAM\\AD\\Actividad2_JBDC\\Actividad2_JBDC.db";
+    private static final HikariDataSource DATA_SOURCE;
+    private static final String URL_LINUX = "jdbc:sqlite:/home/usumaniana/Escritorio/MiguelDV84/2DAM/AD/Actividad2_JBDC/Actividad2_JBDC.db";
+    private static final String URL_WINDOWS = "jdbc:sqlite:C:\\Users\\migue\\Documents\\2DAM\\1Trimestre\\2DAM\\AD\\Actividad2_JBDC\\Actividad2_JBDC.db";
 
     static {
-        dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(urlWindows);
-        dataSource.setMaximumPoolSize(10);
-        dataSource.setMinimumIdle(2);
-        dataSource.setIdleTimeout(30000);
-        dataSource.setConnectionTimeout(30000);
-        dataSource.setMaxLifetime(1800000);
+        DATA_SOURCE = new HikariDataSource();
+        DATA_SOURCE.setJdbcUrl(URL_LINUX);
+        DATA_SOURCE.setMaximumPoolSize(10);
+        DATA_SOURCE.setMinimumIdle(2);
+        DATA_SOURCE.setIdleTimeout(30000);
+        DATA_SOURCE.setConnectionTimeout(30000);
+        DATA_SOURCE.setMaxLifetime(1800000);
     }
 
     public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+        return DATA_SOURCE.getConnection();
     }
 
     public void close() {
-        if (dataSource != null) {
-            dataSource.close();
+        if (DATA_SOURCE != null) {
+            DATA_SOURCE.close();
         }
     }
 }

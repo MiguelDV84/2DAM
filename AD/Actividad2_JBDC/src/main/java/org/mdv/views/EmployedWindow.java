@@ -6,12 +6,14 @@ import org.mdv.model.Empleado;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class EmployedWindow extends JFrame {
 
     public EmployedWindow() throws SQLException {
-        int currentId = 6;
-        Empleado empleado = getEmpleadoId(currentId);
+        AtomicInteger currentId = new AtomicInteger(6);
+        AtomicReference<Empleado> empleado = new AtomicReference<>(getEmpleadoId(currentId.get()));
         setTitle("Empleados");
         setSize(400, 300);
 
@@ -27,26 +29,26 @@ public class EmployedWindow extends JFrame {
 
         // Panel central con campos de texto
         JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(6,2,5,5));
+        panelCenter.setLayout(new GridLayout(6, 2, 5, 5));
         panelCenter.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel emplIdLabel = new JLabel("ID Empleado:");
-        JTextField emplIdField = new JTextField(String.valueOf(empleado.getId()));
+        JTextField emplIdField = new JTextField(String.valueOf(empleado.get().getId()));
 
         JLabel emplLastNameLabel = new JLabel("Apellido:");
-        JTextField emplLastNameField = new JTextField(empleado.getApellido());
+        JTextField emplLastNameField = new JTextField(empleado.get().getApellido());
 
         JLabel jobLabel = new JLabel("Oficio:");
-        JTextField jobField = new JTextField(empleado.getOficio());
+        JTextField jobField = new JTextField(empleado.get().getOficio());
 
         JLabel salaryLabel = new JLabel("Salario:");
-        JTextField salaryField = new JTextField(String.valueOf(empleado.getSalario()));
+        JTextField salaryField = new JTextField(String.valueOf(empleado.get().getSalario()));
 
         JLabel comisionLabel = new JLabel("Comisión:");
-        JTextField comisionField = new JTextField(String.valueOf(empleado.getComision()));
+        JTextField comisionField = new JTextField(String.valueOf(empleado.get().getComision()));
 
         JLabel dateLabel = new JLabel("Fecha de alta:");
-        JTextField dateField = new JTextField(empleado.getFechaAlta());
+        JTextField dateField = new JTextField(empleado.get().getFechaAlta());
 
         panelCenter.add(emplIdLabel);
         panelCenter.add(emplIdField);
@@ -72,7 +74,15 @@ public class EmployedWindow extends JFrame {
         JButton btnNext = new JButton("SIGIUENTE");
         btnNext.addActionListener(e -> {
             try {
-                getEmpleadoId(currentId + 1);
+                currentId.getAndIncrement();
+                empleado.set(getEmpleadoId(currentId.get()));
+                emplIdField.setText(String.valueOf(empleado.get().getId()));
+                emplLastNameField.setText(empleado.get().getApellido());
+                jobField.setText(empleado.get().getOficio());
+                salaryField.setText(String.valueOf(empleado.get().getSalario()));
+                comisionField.setText(String.valueOf(empleado.get().getComision()));
+                dateField.setText(empleado.get().getFechaAlta());
+                System.out.println("Btn Siguiente" + currentId);
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -114,3 +124,4 @@ public class EmployedWindow extends JFrame {
         return dao.getEmpleadoById(id);
     }
 }
+   

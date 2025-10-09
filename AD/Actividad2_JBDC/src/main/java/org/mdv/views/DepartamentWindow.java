@@ -19,9 +19,9 @@ public class DepartamentWindow extends JFrame {
         add(panelTitle, BorderLayout.NORTH);
 
         // Panel central con campos de texto
-        JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(3, 2, 10, 10));
-        panelCenter.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel PANEL_CENTER = new JPanel();
+        PANEL_CENTER.setLayout(new GridLayout(3, 2, 10, 10));
+        PANEL_CENTER.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         JLabel lblId = new JLabel("Codigo departamento:");
         JTextField txtId = new JTextField();
 
@@ -31,14 +31,14 @@ public class DepartamentWindow extends JFrame {
         JLabel lblLocalidad = new JLabel("Localidad:");
         JTextField txtLocalidad = new JTextField();
 
-        panelCenter.add(lblId);
-        panelCenter.add(txtId);
-        panelCenter.add(lblName);
-        panelCenter.add(txtName);
-        panelCenter.add(lblLocalidad);
-        panelCenter.add(txtLocalidad);
+        PANEL_CENTER.add(lblId);
+        PANEL_CENTER.add(txtId);
+        PANEL_CENTER.add(lblName);
+        PANEL_CENTER.add(txtName);
+        PANEL_CENTER.add(lblLocalidad);
+        PANEL_CENTER.add(txtLocalidad);
 
-        add(panelCenter, BorderLayout.CENTER);
+        add(PANEL_CENTER, BorderLayout.CENTER);
 
 
         // Botones inferiores
