@@ -15,7 +15,7 @@ public class EmployedWindow extends JFrame {
         AtomicInteger currentId = new AtomicInteger(6);
         AtomicReference<Empleado> empleado = new AtomicReference<>(getEmpleadoId(currentId.get()));
         setTitle("Empleados");
-        setSize(400, 300);
+        setSize(900, 450);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -34,6 +34,7 @@ public class EmployedWindow extends JFrame {
 
         JLabel emplIdLabel = new JLabel("ID Empleado:");
         JTextField emplIdField = new JTextField(String.valueOf(empleado.get().getId()));
+        emplIdField.setEditable(false);
 
         JLabel emplLastNameLabel = new JLabel("Apellido:");
         JTextField emplLastNameField = new JTextField(empleado.get().getApellido());
@@ -69,23 +70,11 @@ public class EmployedWindow extends JFrame {
         panelBtns.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         JButton btnInsertar = new JButton("INSERTAR");
-        btnInsertar.addActionListener(e -> System.out.println("Btn Insertar"));
+        btnInsertar.addActionListener(e -> insertEmployed(empleado, emplLastNameField));
 
         JButton btnNext = new JButton("SIGIUENTE");
         btnNext.addActionListener(e -> {
-            try {
-                currentId.getAndIncrement();
-                empleado.set(getEmpleadoId(currentId.get()));
-                emplIdField.setText(String.valueOf(empleado.get().getId()));
-                emplLastNameField.setText(empleado.get().getApellido());
-                jobField.setText(empleado.get().getOficio());
-                salaryField.setText(String.valueOf(empleado.get().getSalario()));
-                comisionField.setText(String.valueOf(empleado.get().getComision()));
-                dateField.setText(empleado.get().getFechaAlta());
-                System.out.println("Btn Siguiente" + currentId);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+          nextEmploeyed(currentId, empleado, emplIdField, emplLastNameField, jobField, salaryField, comisionField, dateField);
         });
 
         JButton btnEliminar = new JButton("ELIMINAR");
@@ -99,12 +88,7 @@ public class EmployedWindow extends JFrame {
 
         JButton btnClear = new JButton("LIMPIAR");
         btnClear.addActionListener(e -> {
-            emplIdField.setText("");
-            emplLastNameField.setText("");
-            jobField.setText("");
-            salaryField.setText("");
-            comisionField.setText("");
-            dateField.setText("");
+            clearFields(emplIdField, emplLastNameField, jobField, salaryField, comisionField, dateField);
         });
 
         panelBtns.add(btnInsertar);
@@ -122,6 +106,46 @@ public class EmployedWindow extends JFrame {
         var dao = new EmpleadoDAO();
 
         return dao.getEmpleadoById(id);
+    }
+
+    public static void nextEmploeyed(AtomicInteger id, AtomicReference<Empleado> empleado, JTextField emplIdField, JTextField emplLastNameField, JTextField jobField, JTextField salaryField, JTextField comisionField, JTextField dateField) {
+        try {
+            id.getAndIncrement();
+            empleado.set(getEmpleadoId(id.get()));
+            emplIdField.setText(String.valueOf(empleado.get().getId()));
+            emplLastNameField.setText(empleado.get().getApellido());
+            jobField.setText(empleado.get().getOficio());
+            salaryField.setText(String.valueOf(empleado.get().getSalario()));
+            comisionField.setText(String.valueOf(empleado.get().getComision()));
+            dateField.setText(empleado.get().getFechaAlta());
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void clearFields(JTextField... fields) {
+        for (JTextField field : fields) {
+            field.setText("");
+        }
+    }
+
+    public static void insertEmployed(AtomicReference<Empleado> empleado, JTextField... otherFields) {
+            var dao = new EmpleadoDAO();
+            try {
+                empleado.get().setApellido(otherFields[1].getText());
+                empleado.get().setOficio(otherFields[2].getText());
+                empleado.get().setSalario(Double.parseDouble(otherFields[3].getText()));
+                empleado.get().setComision(Integer.parseInt(otherFields[4].getText()));
+                empleado.get().setFechaAlta(otherFields[5].getText());
+                System.out.println(empleado.get().getApellido());
+                dao.insertEmpleado(empleado.get());
+                JOptionPane.showMessageDialog(null,
+                        "Empleado insertado con exito",
+                        "Exito",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
     }
 }
    
