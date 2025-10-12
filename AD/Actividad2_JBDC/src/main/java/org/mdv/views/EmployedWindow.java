@@ -2,10 +2,12 @@ package org.mdv.views;
 
 import org.mdv.dao.EmpleadoDAO;
 import org.mdv.model.Empleado;
+import org.mdv.utils.ModalPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -29,12 +31,15 @@ public class EmployedWindow extends JFrame {
 
         // Panel central con campos de texto
         JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(6, 2, 5, 5));
+        panelCenter.setLayout(new GridLayout(7, 2, 5, 5));
         panelCenter.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel emplIdLabel = new JLabel("ID Empleado:");
         JTextField emplIdField = new JTextField(String.valueOf(empleado.get().getId()));
         emplIdField.setEditable(false);
+
+        JLabel emplNameLabel = new JLabel("Nombre:");
+        JTextField emplNameField = new JTextField(empleado.get().getNombre());
 
         JLabel emplLastNameLabel = new JLabel("Apellido:");
         JTextField emplLastNameField = new JTextField(empleado.get().getApellido());
@@ -53,6 +58,8 @@ public class EmployedWindow extends JFrame {
 
         panelCenter.add(emplIdLabel);
         panelCenter.add(emplIdField);
+        panelCenter.add(emplNameLabel);
+        panelCenter.add(emplNameField);
         panelCenter.add(emplLastNameLabel);
         panelCenter.add(emplLastNameField);
         panelCenter.add(jobLabel);
@@ -70,7 +77,14 @@ public class EmployedWindow extends JFrame {
         panelBtns.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         JButton btnInsertar = new JButton("INSERTAR");
-        btnInsertar.addActionListener(e -> insertEmployed(empleado, emplLastNameField));
+        btnInsertar.addActionListener(e ->
+            insertEmployed(
+                emplNameField,
+                emplLastNameField,
+                jobField,
+                salaryField,
+                comisionField,
+                dateField));
 
         JButton btnNext = new JButton("SIGIUENTE");
         btnNext.addActionListener(e -> {
@@ -110,6 +124,10 @@ public class EmployedWindow extends JFrame {
 
     public static void nextEmploeyed(AtomicInteger id, AtomicReference<Empleado> empleado, JTextField emplIdField, JTextField emplLastNameField, JTextField jobField, JTextField salaryField, JTextField comisionField, JTextField dateField) {
         try {
+            if(empleado.get() == null) {
+                new ModalPanel("No hay más empleados", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             id.getAndIncrement();
             empleado.set(getEmpleadoId(id.get()));
             emplIdField.setText(String.valueOf(empleado.get().getId()));
@@ -129,23 +147,39 @@ public class EmployedWindow extends JFrame {
         }
     }
 
-    public static void insertEmployed(AtomicReference<Empleado> empleado, JTextField... otherFields) {
-            var dao = new EmpleadoDAO();
-            try {
-                empleado.get().setApellido(otherFields[1].getText());
-                empleado.get().setOficio(otherFields[2].getText());
-                empleado.get().setSalario(Double.parseDouble(otherFields[3].getText()));
-                empleado.get().setComision(Integer.parseInt(otherFields[4].getText()));
-                empleado.get().setFechaAlta(otherFields[5].getText());
-                System.out.println(empleado.get().getApellido());
-                dao.insertEmpleado(empleado.get());
-                JOptionPane.showMessageDialog(null,
-                        "Empleado insertado con exito",
-                        "Exito",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+    // ESTE METODO ME DA ERROR
+    public static void insertEmployed(
+                                      JTextField nameField,
+                                      JTextField lastNameField,
+                                      JTextField jobField,
+                                      JTextField salaryField,
+                                      JTextField comisionField,
+                                      JTextField dateField) {
+        var dao = new EmpleadoDAO();
+        try {
+            Empleado emp = new Empleado();
+
+
+            emp.setNombre(nameField.getText().trim());
+            emp.setApellido(lastNameField.getText().trim());
+            emp.setOficio(jobField.getText().trim());
+            emp.setSalario(Double.parseDouble(salaryField.getText().trim()));
+            emp.setComision(Integer.parseInt(comisionField.getText().trim()));
+            emp.setFechaAlta(dateField.getText().trim());
+            emp.setIdDepartamento(1); // o el que corresponda
+
+            dao.insertEmpleado(emp);
+
+            JOptionPane.showMessageDialog(null, "Empleado insertado con éxito",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Revisa los campos numéricos (salario/comisión/ID).",
+                    "Datos inválidos", JOptionPane.WARNING_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo insertar el empleado:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
+
    

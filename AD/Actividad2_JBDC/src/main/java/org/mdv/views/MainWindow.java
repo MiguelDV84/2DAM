@@ -37,7 +37,13 @@ public class MainWindow extends JFrame {
         });
 
         JButton btnDepartamentos = new JButton("Departamentos");
-        btnDepartamentos.addActionListener(e -> new DepartamentWindow());
+        btnDepartamentos.addActionListener(e -> {
+            try {
+                new DepartamentWindow();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         panelBtns.add(btnEmpleados);
         panelBtns.add(btnDepartamentos);

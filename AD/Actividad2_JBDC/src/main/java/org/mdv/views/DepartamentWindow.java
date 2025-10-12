@@ -1,10 +1,21 @@
 package org.mdv.views;
 
+import org.mdv.dao.DepartamentoDAO;
+import org.mdv.dao.EmpleadoDAO;
+import org.mdv.model.Departamento;
+import org.mdv.model.Empleado;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DepartamentWindow extends JFrame {
-    public DepartamentWindow() {
+    public DepartamentWindow() throws SQLException {
+        AtomicInteger currentId = new AtomicInteger(1);
+        AtomicReference<Departamento> departamento = new AtomicReference<>(getDepartamentoId(currentId.get()));
+
         setTitle("Departamentos");
         setSize(400, 300);
 
@@ -22,14 +33,17 @@ public class DepartamentWindow extends JFrame {
         JPanel PANEL_CENTER = new JPanel();
         PANEL_CENTER.setLayout(new GridLayout(3, 2, 10, 10));
         PANEL_CENTER.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
         JLabel lblId = new JLabel("Codigo departamento:");
-        JTextField txtId = new JTextField();
+        JTextField txtId = new JTextField(String.valueOf(departamento.get().getId()));
+        txtId.setEditable(false);
+
 
         JLabel lblName = new JLabel("Nombre departamento:");
-        JTextField txtName = new JTextField();
+        JTextField txtName = new JTextField(departamento.get().getNombreDep());
 
         JLabel lblLocalidad = new JLabel("Localidad:");
-        JTextField txtLocalidad = new JTextField();
+        JTextField txtLocalidad = new JTextField(departamento.get().getLocalidad());
 
         PANEL_CENTER.add(lblId);
         PANEL_CENTER.add(txtId);
@@ -65,6 +79,12 @@ public class DepartamentWindow extends JFrame {
         add(panelBtns, BorderLayout.SOUTH);
 
         setVisible(true);
+    }
+
+    public static Departamento getDepartamentoId(int id) throws SQLException {
+        var dao = new DepartamentoDAO();
+
+        return dao.getDepartamentoById(id);
     }
 }
 

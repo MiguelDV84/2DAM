@@ -44,9 +44,10 @@ public class EmpleadoDAO implements IEmpleadoDAO {
         try (Connection cn = ConexionHikari.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                empleado = employedMapper(rs);
+            if (!rs.next()) {
+                return null;
             }
+            empleado = employedMapper(rs);
         } catch (SQLException ex) {
             Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,6 +72,7 @@ public class EmpleadoDAO implements IEmpleadoDAO {
                 "comision",
                 "id_dep");
 
+
         try (Connection cn = ConexionHikari.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             employedPsMapper(ps, empleado);
@@ -92,7 +94,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
     }
 
     public static void employedPsMapper(PreparedStatement ps, Empleado empleado) throws SQLException {
-        ps.setInt(0, empleado.getId());
         ps.setString(1, empleado.getNombre());
         ps.setString(2, empleado.getApellido());
         ps.setString(3, empleado.getOficio());
