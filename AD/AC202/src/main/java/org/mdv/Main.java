@@ -13,5 +13,6 @@ public class Main {
          clienteDAO.getClientes().forEach(cliente -> {
             System.out.println(cliente.toString());
          });
+
     }
 }
