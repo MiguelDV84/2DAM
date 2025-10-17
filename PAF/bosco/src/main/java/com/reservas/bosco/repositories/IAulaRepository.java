@@ -1,13 +1,13 @@
 package com.reservas.bosco.repositories;
 
 import com.reservas.bosco.entities.Aula;
-import com.reservas.bosco.entities.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IAulaRepository extends JpaRepository<Aula, Long> {
-    List<Reserva> findReserveOfAula(Long idReserva);
-    List<Aula> findByCapacidad(int capacidad);
-    List<Aula> findAulasWithComputers(boolean conComputadora);
+    Optional<List<Aula>> findReserveOfAula(Long idReserva);
+    Optional<List<Aula>> findByCapacidad(int capacidad);
+    Optional<List<Aula>> findAulasWithComputers(boolean conComputadora);
 }
