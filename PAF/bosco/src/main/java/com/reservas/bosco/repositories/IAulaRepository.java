@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAulaRepository extends JpaRepository<Aula, Long> {
-    Optional<List<Aula>> findReserveOfAula(Long idReserva);
     Optional<List<Aula>> findByCapacidad(int capacidad);
     Optional<List<Aula>> findAulasWithComputers(boolean conComputadora);
+    Optional<List<Aula>> findReserveOfAula(Long idReserva);
 }

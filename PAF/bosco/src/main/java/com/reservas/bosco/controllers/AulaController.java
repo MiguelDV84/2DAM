@@ -2,10 +2,12 @@ package com.reservas.bosco.controllers;
 
 import com.reservas.bosco.entities.Aula;
 import com.reservas.bosco.repositories.IAulaRepository;
+import com.reservas.bosco.utils.ClassUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
@@ -13,13 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AulaController {
 
-    IAulaRepository aulaRepository;
-    
+    private final IAulaRepository aulaRepository;
+    private ClassUtil classUtil = new ClassUtil();
+
     @GetMapping
     public ResponseEntity<List<Aula>> findAll() {
         return ResponseEntity.ok(aulaRepository.findAll());
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Aula> findById(@PathVariable Long id) {
         return ResponseEntity.of(aulaRepository.findById(id));
@@ -46,20 +49,16 @@ public class AulaController {
     public ResponseEntity<Aula> updateAula(@PathVariable Long id, @RequestBody Aula updatedAula) {
         return aulaRepository.findById(id)
                 .map(aula -> {
-                    aula.setNombre(updatedAula.getNombre());
-                    aula.setCapacidad(updatedAula.getCapacidad());
-                    aula.setEsAulaDeOrdenador(updatedAula.isEsAulaDeOrdenador());
-                    Aula savedAula = aulaRepository.save(aula);
-                    return ResponseEntity.ok(savedAula);
-                }).orElse(ResponseEntity.notFound().build());
-    }
+                        //Extraer en un metodo
+                    try {
+                        classUtil.copyProperties(updatedAula, aula);
+                    } catch (IllegalAccessException e) {
+                        System.out.println("Error de acceso al copiar las propiedades: " + e.getMessage());
+                    } catch (InvocationTargetException e) {
+                        System.out.println("Error al invocar el método para copiar las propiedades: " + e.getMessage());
+                    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Aula> deleteAula(@PathVariable Long id) {
-        return aulaRepository.findById(id)
-                .map(aula -> {
-                    aulaRepository.delete(aula);
-                    aulaRepository.save();
+                    return ResponseEntity.ok(aula);
                 }).orElse(ResponseEntity.notFound().build());
     }
 }
